@@ -14,7 +14,7 @@
 - 빌드 실패 혹은 테스트 누락이 의심될 경우 로컬에서 즉시 재확인한다.
 
 ## 3. 프로젝트 구조 원칙
-- 소스 루트: `src/main/java/com/example/shopmark2`.
+- 소스 루트: `src/main/java/com/example/shop`.
 - 도메인 단위 수직 슬라이스 구조 유지 (`<domain>.domain|application|presentation`).
 - 공통 인프라/설정은 `global.infrastructure`, `global.common`에 위치.
 - 리소스: `src/main/resources` → Spring 설정, SQL 스크립트, 생성된 문서. 빌드시 `build/resources/main/static/springdoc` 로 동기화된다.
