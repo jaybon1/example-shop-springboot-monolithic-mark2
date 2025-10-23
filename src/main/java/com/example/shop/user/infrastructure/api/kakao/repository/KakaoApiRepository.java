@@ -1,6 +1,6 @@
 package com.example.shop.user.infrastructure.api.kakao.repository;
 
-import com.example.shop.global.util.UtilFunction;
+import com.example.shop.common.util.UtilFunction;
 import com.example.shop.user.infrastructure.api.kakao.dto.response.ResGetKakaoUserMeDtoV2;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

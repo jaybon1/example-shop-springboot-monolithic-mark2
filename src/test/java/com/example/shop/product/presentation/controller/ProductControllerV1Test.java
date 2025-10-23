@@ -4,7 +4,7 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceDocumentation;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.SimpleType;
-import com.example.shop.global.presentation.dto.ApiDto;
+import com.example.shop.common.presentation.dto.ApiDto;
 import com.example.shop.product.domain.model.Product;
 import com.example.shop.product.domain.repository.ProductRepository;
 import com.example.shop.product.presentation.dto.request.ReqPostProductsDtoV1;

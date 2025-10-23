@@ -1,7 +1,7 @@
 package com.example.shop.user.presentation.controller;
 
-import com.example.shop.global.infrastructure.config.security.auth.CustomUserDetails;
-import com.example.shop.global.presentation.dto.ApiDto;
+import com.example.shop.common.infrastructure.config.security.auth.CustomUserDetails;
+import com.example.shop.common.presentation.dto.ApiDto;
 import com.example.shop.user.application.service.UserServiceV1;
 import com.example.shop.user.presentation.dto.response.ResGetUsersDtoV1;
 import com.example.shop.user.presentation.dto.response.ResGetUsersWithIdDtoV1;

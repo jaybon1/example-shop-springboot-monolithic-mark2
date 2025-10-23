@@ -1,6 +1,6 @@
 package com.example.shop.user.presentation.dto.request;
 
-import com.example.shop.global.infrastructure.constants.Constants;
+import com.example.shop.common.infrastructure.constants.Constants;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

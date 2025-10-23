@@ -6,7 +6,7 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceDocumentation;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.SimpleType;
-import com.example.shop.global.presentation.dto.ApiDto;
+import com.example.shop.common.presentation.dto.ApiDto;
 import com.example.shop.user.presentation.dto.request.ReqPostAuthLoginDtoV1;
 import com.example.shop.user.presentation.dto.response.ResPostAuthLoginDtoV1;
 import com.fasterxml.jackson.core.type.TypeReference;

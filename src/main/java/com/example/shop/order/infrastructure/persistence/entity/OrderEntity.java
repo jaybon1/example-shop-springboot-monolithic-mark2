@@ -1,6 +1,6 @@
 package com.example.shop.order.infrastructure.persistence.entity;
 
-import com.example.shop.global.infrastructure.persistence.entity.BaseEntity;
+import com.example.shop.common.infrastructure.persistence.entity.BaseEntity;
 import com.example.shop.payment.infrastructure.persistence.entity.PaymentEntity;
 import com.example.shop.user.infrastructure.persistence.entity.UserEntity;
 import jakarta.persistence.*;

@@ -3,7 +3,7 @@ package com.example.shop.user.presentation.controller;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceDocumentation;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
-import com.example.shop.global.presentation.dto.ApiDto;
+import com.example.shop.common.presentation.dto.ApiDto;
 import com.example.shop.user.presentation.dto.request.ReqAuthPostRefreshDtoV1;
 import com.example.shop.user.presentation.dto.request.ReqPostAuthLoginDtoV1;
 import com.example.shop.user.presentation.dto.request.ReqPostAuthRegisterDtoV1;

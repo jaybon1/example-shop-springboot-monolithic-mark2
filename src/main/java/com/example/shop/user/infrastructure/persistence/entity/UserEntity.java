@@ -1,6 +1,6 @@
 package com.example.shop.user.infrastructure.persistence.entity;
 
-import com.example.shop.global.infrastructure.persistence.entity.BaseEntity;
+import com.example.shop.common.infrastructure.persistence.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

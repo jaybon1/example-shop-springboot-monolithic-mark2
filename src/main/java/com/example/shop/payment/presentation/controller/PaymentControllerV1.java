@@ -1,7 +1,7 @@
 package com.example.shop.payment.presentation.controller;
 
-import com.example.shop.global.infrastructure.config.security.auth.CustomUserDetails;
-import com.example.shop.global.presentation.dto.ApiDto;
+import com.example.shop.common.infrastructure.config.security.auth.CustomUserDetails;
+import com.example.shop.common.presentation.dto.ApiDto;
 import com.example.shop.payment.application.service.PaymentServiceV1;
 import com.example.shop.payment.presentation.dto.request.ReqPostPaymentsDtoV1;
 import com.example.shop.payment.presentation.dto.response.ResGetPaymentsWithIdDtoV1;

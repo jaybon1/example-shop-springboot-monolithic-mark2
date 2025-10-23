@@ -1,7 +1,7 @@
 package com.example.shop.order.presentation.controller;
 
-import com.example.shop.global.infrastructure.config.security.auth.CustomUserDetails;
-import com.example.shop.global.presentation.dto.ApiDto;
+import com.example.shop.common.infrastructure.config.security.auth.CustomUserDetails;
+import com.example.shop.common.presentation.dto.ApiDto;
 import com.example.shop.order.application.service.OrderServiceV1;
 import com.example.shop.order.presentation.dto.request.ReqPostOrdersDtoV1;
 import com.example.shop.order.presentation.dto.response.ResGetOrdersDtoV1;

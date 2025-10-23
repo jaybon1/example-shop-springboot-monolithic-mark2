@@ -1,7 +1,7 @@
 package com.example.shop.user.presentation.advice;
 
 
-import com.example.shop.global.presentation.dto.ApiDto;
+import com.example.shop.common.presentation.dto.ApiDto;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
