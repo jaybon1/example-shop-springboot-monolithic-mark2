@@ -6,7 +6,7 @@ import com.example.shop.product.domain.repository.ProductRepository;
 import com.example.shop.product.presentation.advice.ProductError;
 import com.example.shop.product.presentation.advice.ProductException;
 import com.example.shop.product.presentation.dto.request.ReqPostProductsDtoV1;
-import com.example.shop.product.presentation.dto.request.ReqPutProductsWithIdDtoV1;
+import com.example.shop.product.presentation.dto.request.ReqPutProductDtoV1;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -101,16 +101,16 @@ class ProductServiceV1Test {
 
     @Test
     @DisplayName("상품 수정 시 권한 없으면 예외를 던진다")
-    void putProductsWithIdRequiresAuthority() {
-        ReqPutProductsWithIdDtoV1 reqDto = ReqPutProductsWithIdDtoV1.builder()
-                .product(ReqPutProductsWithIdDtoV1.ProductDto.builder()
+    void putProductRequiresAuthority() {
+        ReqPutProductDtoV1 reqDto = ReqPutProductDtoV1.builder()
+                .product(ReqPutProductDtoV1.ProductDto.builder()
                         .name("updated")
                         .price(2000L)
                         .stock(5L)
                         .build())
                 .build();
 
-        assertThatThrownBy(() -> productServiceV1.putProductsWithId(UUID.randomUUID(), List.of("USER"), existingProduct.getId(), reqDto))
+        assertThatThrownBy(() -> productServiceV1.putProduct(UUID.randomUUID(), List.of("USER"), existingProduct.getId(), reqDto))
                 .isInstanceOf(ProductException.class)
                 .extracting(Throwable::getMessage)
                 .asString()
@@ -119,12 +119,12 @@ class ProductServiceV1Test {
 
     @Test
     @DisplayName("상품 삭제 시 권한과 사용자 ID를 검증한다")
-    void deleteProductsWithIdChecksAuthorityAndUserId() {
+    void deleteProductChecksAuthorityAndUserId() {
         when(productRepository.findById(existingProduct.getId())).thenReturn(Optional.of(existingProduct));
         when(productRepository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         UUID deleterId = UUID.randomUUID();
-        productServiceV1.deleteProductsWithId(deleterId, List.of("ADMIN"), existingProduct.getId());
+        productServiceV1.deleteProduct(deleterId, List.of("ADMIN"), existingProduct.getId());
 
         verify(productRepository).save(argThat(product ->
                 product.getDeletedAt() != null && deleterId.toString().equals(product.getDeletedBy())
@@ -133,10 +133,10 @@ class ProductServiceV1Test {
 
     @Test
     @DisplayName("존재하지 않는 상품 삭제 시 예외를 던진다")
-    void deleteProductsWithIdThrowsWhenMissing() {
+    void deleteProductThrowsWhenMissing() {
         when(productRepository.findById(existingProduct.getId())).thenReturn(Optional.empty());
 
-        assertThatThrownBy(() -> productServiceV1.deleteProductsWithId(UUID.randomUUID(), List.of("ADMIN"), existingProduct.getId()))
+        assertThatThrownBy(() -> productServiceV1.deleteProduct(UUID.randomUUID(), List.of("ADMIN"), existingProduct.getId()))
                 .isInstanceOf(ProductException.class)
                 .extracting(Throwable::getMessage)
                 .asString()

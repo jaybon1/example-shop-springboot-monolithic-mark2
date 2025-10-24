@@ -7,7 +7,7 @@ import com.example.shop.payment.domain.repository.PaymentRepository;
 import com.example.shop.payment.presentation.advice.PaymentError;
 import com.example.shop.payment.presentation.advice.PaymentException;
 import com.example.shop.payment.presentation.dto.request.ReqPostPaymentsDtoV1;
-import com.example.shop.payment.presentation.dto.response.ResGetPaymentsWithIdDtoV1;
+import com.example.shop.payment.presentation.dto.response.ResGetPaymentDtoV1;
 import com.example.shop.payment.presentation.dto.response.ResPostPaymentsDtoV1;
 import com.example.shop.user.domain.model.User;
 import com.example.shop.user.domain.repository.UserRepository;
@@ -26,7 +26,7 @@ public class PaymentServiceV1 {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
-    public ResGetPaymentsWithIdDtoV1 getPaymentsWithId(UUID paymentId, UUID authUserId) {
+    public ResGetPaymentDtoV1 getPayment(UUID paymentId, UUID authUserId) {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new PaymentException(PaymentError.PAYMENT_NOT_FOUND));
 
@@ -42,7 +42,7 @@ public class PaymentServiceV1 {
                 ? userRepository.findById(payment.getUserId()).orElse(null)
                 : null;
 
-        return ResGetPaymentsWithIdDtoV1.of(payment, order, user);
+        return ResGetPaymentDtoV1.of(payment, order, user);
     }
 
     @Transactional

@@ -12,12 +12,12 @@ import java.util.List;
 
 @Getter
 @Builder
-public class ResGetOrdersWithIdDtoV1 {
+public class ResGetOrderDtoV1 {
 
     private OrderDto order;
 
-    public static ResGetOrdersWithIdDtoV1 of(Order order) {
-        return ResGetOrdersWithIdDtoV1.builder()
+    public static ResGetOrderDtoV1 of(Order order) {
+        return ResGetOrderDtoV1.builder()
                 .order(OrderDto.from(order))
                 .build();
     }

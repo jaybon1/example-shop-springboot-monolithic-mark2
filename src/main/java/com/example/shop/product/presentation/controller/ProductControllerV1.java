@@ -4,11 +4,11 @@ import com.example.shop.common.infrastructure.config.security.auth.CustomUserDet
 import com.example.shop.common.presentation.dto.ApiDto;
 import com.example.shop.product.application.service.ProductServiceV1;
 import com.example.shop.product.presentation.dto.request.ReqPostProductsDtoV1;
-import com.example.shop.product.presentation.dto.request.ReqPutProductsWithIdDtoV1;
+import com.example.shop.product.presentation.dto.request.ReqPutProductDtoV1;
 import com.example.shop.product.presentation.dto.response.ResGetProductsDtoV1;
-import com.example.shop.product.presentation.dto.response.ResGetProductsWithIdDtoV1;
+import com.example.shop.product.presentation.dto.response.ResGetProductDtoV1;
 import com.example.shop.product.presentation.dto.response.ResPostProductsDtoV1;
-import com.example.shop.product.presentation.dto.response.ResPutProductsWithIdDtoV1;
+import com.example.shop.product.presentation.dto.response.ResPutProductDtoV1;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -44,13 +44,13 @@ public class ProductControllerV1 {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiDto<ResGetProductsWithIdDtoV1>> getProductsWithId(
+    public ResponseEntity<ApiDto<ResGetProductDtoV1>> getProduct(
             @PathVariable("id") UUID productId
     ) {
-        ResGetProductsWithIdDtoV1 responseBody = productServiceV1.getProductsWithId(productId);
+        ResGetProductDtoV1 responseBody = productServiceV1.getProduct(productId);
 
         return ResponseEntity.ok(
-                ApiDto.<ResGetProductsWithIdDtoV1>builder()
+                ApiDto.<ResGetProductDtoV1>builder()
                         .data(responseBody)
                         .build()
         );
@@ -70,19 +70,19 @@ public class ProductControllerV1 {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiDto<ResPutProductsWithIdDtoV1>> putProductsWithId(
+    public ResponseEntity<ApiDto<ResPutProductDtoV1>> putProduct(
             @PathVariable("id") UUID productId,
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody @Valid ReqPutProductsWithIdDtoV1 reqDto
+            @RequestBody @Valid ReqPutProductDtoV1 reqDto
     ) {
-        ResPutProductsWithIdDtoV1 responseBody = productServiceV1.putProductsWithId(
+        ResPutProductDtoV1 responseBody = productServiceV1.putProduct(
                 customUserDetails.getUser().getId(),
                 customUserDetails.getUser().getRoleList(),
                 productId,
                 reqDto
         );
         return ResponseEntity.ok(
-                ApiDto.<ResPutProductsWithIdDtoV1>builder()
+                ApiDto.<ResPutProductDtoV1>builder()
                         .message("상품 정보가 업데이트 되었습니다.")
                         .data(responseBody)
                         .build()
@@ -90,11 +90,11 @@ public class ProductControllerV1 {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiDto<Object>> deleteProductsWithId(
+    public ResponseEntity<ApiDto<Object>> deleteProduct(
             @PathVariable("id") UUID productId,
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
-        productServiceV1.deleteProductsWithId(
+        productServiceV1.deleteProduct(
                 customUserDetails.getUser().getId(),
                 customUserDetails.getUser().getRoleList(),
                 productId

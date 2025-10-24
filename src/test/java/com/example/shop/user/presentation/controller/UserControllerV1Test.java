@@ -82,7 +82,7 @@ public class UserControllerV1Test {
     }
 
     @Test
-    public void testGetUsersWithIdSuccess() throws Exception {
+    public void testGetUserSuccess() throws Exception {
         MvcResult loginMvcResult = login();
         ApiDto<ResPostAuthLoginDtoV1> resLoginDto = objectMapper.readValue(
                 loginMvcResult.getResponse().getContentAsString(),
@@ -123,7 +123,7 @@ public class UserControllerV1Test {
     }
 
     @Test
-    public void testDeleteUsersWithIdSuccess() throws Exception {
+    public void testDeleteUserSuccess() throws Exception {
         MvcResult loginMvcResult = login();
         ApiDto<ResPostAuthLoginDtoV1> resLoginDto = objectMapper.readValue(
                 loginMvcResult.getResponse().getContentAsString(),

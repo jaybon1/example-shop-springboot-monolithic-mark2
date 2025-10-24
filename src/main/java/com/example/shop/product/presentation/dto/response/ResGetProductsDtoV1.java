@@ -39,8 +39,8 @@ public class ResGetProductsDtoV1 {
             private Long price;
             private Long stock;
 
-            private static List<ProductDto> from(List<Product> productList) {
-                return productList.stream()
+            private static List<ProductDto> from(List<Product> products) {
+                return products.stream()
                         .map(ProductDto::from)
                         .toList();
             }

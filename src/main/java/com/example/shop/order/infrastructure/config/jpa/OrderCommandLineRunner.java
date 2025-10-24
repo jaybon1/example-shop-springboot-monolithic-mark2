@@ -31,8 +31,8 @@ public class OrderCommandLineRunner implements CommandLineRunner {
             return;
         }
 
-        List<Product> productList = productRepository.findAll(Pageable.unpaged()).getContent();
-        if (productList.isEmpty()) {
+        List<Product> products = productRepository.findAll(Pageable.unpaged()).getContent();
+        if (products.isEmpty()) {
             return;
         }
 
@@ -42,10 +42,10 @@ public class OrderCommandLineRunner implements CommandLineRunner {
         }
 
         User firstUser = userList.get(0);
-        Product firstProduct = productList.get(0);
+        Product firstProduct = products.get(0);
         savePaidOrder(firstUser, firstProduct, 2L);
 
-        Product lastProduct = productList.get(productList.size() - 1);
+        Product lastProduct = products.get(products.size() - 1);
         User secondUser = userList.size() > 1 ? userList.get(1) : firstUser;
         savePaidOrder(secondUser, lastProduct, 1L);
     }

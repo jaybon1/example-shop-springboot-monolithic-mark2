@@ -6,7 +6,7 @@ import com.example.shop.user.domain.repository.UserRepository;
 import com.example.shop.user.presentation.advice.UserError;
 import com.example.shop.user.presentation.advice.UserException;
 import com.example.shop.user.presentation.dto.response.ResGetUsersDtoV1;
-import com.example.shop.user.presentation.dto.response.ResGetUsersWithIdDtoV1;
+import com.example.shop.user.presentation.dto.response.ResGetUserDtoV1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -57,13 +57,13 @@ public class UserServiceV1 {
         return ResGetUsersDtoV1.of(userPage);
     }
 
-    public ResGetUsersWithIdDtoV1 getUsersWithId(UUID authUserId, List<String> authUserRoleList, UUID userId) {
+    public ResGetUserDtoV1 getUser(UUID authUserId, List<String> authUserRoleList, UUID userId) {
         User user = userRepository.findDefaultById(userId);
         validateBy(authUserId, authUserRoleList, user);
-        return ResGetUsersWithIdDtoV1.of(user);
+        return ResGetUserDtoV1.of(user);
     }
 
-    public void deleteUsersById(UUID authUserId, List<String> authUserRoleList, UUID userId) {
+    public void deleteUser(UUID authUserId, List<String> authUserRoleList, UUID userId) {
         User user = userRepository.findDefaultById(userId);
         validateBy(authUserId, authUserRoleList, user);
         if (user.getUserRoleList().stream().map(UserRole::getRole).anyMatch(role -> role.equals(UserRole.Role.ADMIN))) {

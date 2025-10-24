@@ -4,7 +4,7 @@ import com.example.shop.common.infrastructure.config.security.auth.CustomUserDet
 import com.example.shop.common.presentation.dto.ApiDto;
 import com.example.shop.user.application.service.UserServiceV1;
 import com.example.shop.user.presentation.dto.response.ResGetUsersDtoV1;
-import com.example.shop.user.presentation.dto.response.ResGetUsersWithIdDtoV1;
+import com.example.shop.user.presentation.dto.response.ResGetUserDtoV1;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -48,13 +48,13 @@ public class UserControllerV1 {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiDto<ResGetUsersWithIdDtoV1>> getUsersWithId(
+    public ResponseEntity<ApiDto<ResGetUserDtoV1>> getUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PathVariable("id") UUID userId
     ) {
         return ResponseEntity.ok(
-                ApiDto.<ResGetUsersWithIdDtoV1>builder()
-                        .data(userServiceV1.getUsersWithId(
+                ApiDto.<ResGetUserDtoV1>builder()
+                        .data(userServiceV1.getUser(
                                 customUserDetails.getUser().getId(),
                                 customUserDetails.getUser().getRoleList(),
                                 userId
@@ -80,11 +80,11 @@ public class UserControllerV1 {
 //    }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiDto<Object>> deleteUsersWithId(
+    public ResponseEntity<ApiDto<Object>> deleteUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PathVariable("id") UUID userId
     ) {
-        userServiceV1.deleteUsersById(
+        userServiceV1.deleteUser(
                 customUserDetails.getUser().getId(),
                 customUserDetails.getUser().getRoleList(),
                 userId

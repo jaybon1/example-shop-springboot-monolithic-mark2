@@ -4,7 +4,7 @@ import com.example.shop.common.infrastructure.config.security.auth.CustomUserDet
 import com.example.shop.common.presentation.dto.ApiDto;
 import com.example.shop.payment.application.service.PaymentServiceV1;
 import com.example.shop.payment.presentation.dto.request.ReqPostPaymentsDtoV1;
-import com.example.shop.payment.presentation.dto.response.ResGetPaymentsWithIdDtoV1;
+import com.example.shop.payment.presentation.dto.response.ResGetPaymentDtoV1;
 import com.example.shop.payment.presentation.dto.response.ResPostPaymentsDtoV1;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +24,13 @@ public class PaymentControllerV1 {
     private final PaymentServiceV1 paymentServiceV1;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiDto<ResGetPaymentsWithIdDtoV1>> getPaymentsWithId(
+    public ResponseEntity<ApiDto<ResGetPaymentDtoV1>> getPayment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PathVariable("id") UUID paymentId
     ) {
-        ResGetPaymentsWithIdDtoV1 responseBody = paymentServiceV1.getPaymentsWithId(paymentId, customUserDetails.getUser().getId());
+        ResGetPaymentDtoV1 responseBody = paymentServiceV1.getPayment(paymentId, customUserDetails.getUser().getId());
         return ResponseEntity.ok(
-                ApiDto.<ResGetPaymentsWithIdDtoV1>builder()
+                ApiDto.<ResGetPaymentDtoV1>builder()
                         .data(responseBody)
                         .build()
         );

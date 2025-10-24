@@ -141,10 +141,10 @@ class UserServiceV1Test {
 
     @Test
     @DisplayName("동일 사용자는 상세 조회가 가능하다")
-    void getUsersWithIdAsSelf() {
+    void getUserAsSelf() {
         when(userRepository.findDefaultById(normalUser.getId())).thenReturn(normalUser);
 
-        var response = userServiceV1.getUsersWithId(normalUser.getId(), List.of(UserRole.Role.USER.toString()), normalUser.getId());
+        var response = userServiceV1.getUser(normalUser.getId(), List.of(UserRole.Role.USER.toString()), normalUser.getId());
 
         assertThat(response.getUser().getId()).isEqualTo(normalUser.getId().toString());
         verify(userRepository).findDefaultById(normalUser.getId());
@@ -152,20 +152,20 @@ class UserServiceV1Test {
 
     @Test
     @DisplayName("관리자 정보는 관리자만 조회할 수 있다")
-    void getUsersWithIdAdminRequiresAdminRole() {
+    void getUserAdminRequiresAdminRole() {
         when(userRepository.findDefaultById(adminUser.getId())).thenReturn(adminUser);
 
-        assertThatThrownBy(() -> userServiceV1.getUsersWithId(normalUser.getId(), List.of(UserRole.Role.USER.toString()), adminUser.getId()))
+        assertThatThrownBy(() -> userServiceV1.getUser(normalUser.getId(), List.of(UserRole.Role.USER.toString()), adminUser.getId()))
                 .isInstanceOf(UserException.class);
     }
 
     @Test
     @DisplayName("매니저는 다른 사용자를 삭제할 수 있으며, 삭제 정보가 기록된다")
-    void deleteUsersByIdAsManager() {
+    void deleteUserAsManager() {
         when(userRepository.findDefaultById(normalUser.getId())).thenReturn(normalUser);
         when(userRepository.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        userServiceV1.deleteUsersById(UUID.randomUUID(), List.of(UserRole.Role.MANAGER.toString()), normalUser.getId());
+        userServiceV1.deleteUser(UUID.randomUUID(), List.of(UserRole.Role.MANAGER.toString()), normalUser.getId());
 
         verify(userRepository).save(argThat(savedUser -> savedUser.getDeletedAt() != null));
     }
@@ -175,17 +175,17 @@ class UserServiceV1Test {
     void deleteAdminUserThrows() {
         when(userRepository.findDefaultById(adminUser.getId())).thenReturn(adminUser);
 
-        assertThatThrownBy(() -> userServiceV1.deleteUsersById(UUID.randomUUID(), List.of(UserRole.Role.MANAGER.toString()), adminUser.getId()))
+        assertThatThrownBy(() -> userServiceV1.deleteUser(UUID.randomUUID(), List.of(UserRole.Role.MANAGER.toString()), adminUser.getId()))
                 .isInstanceOf(UserException.class);
         verify(userRepository, never()).save(any());
     }
 
     @Test
     @DisplayName("권한이 없는 사용자는 다른 사용자를 조회할 수 없다")
-    void getUsersWithIdForbiddenForOtherUser() {
+    void getUserForbiddenForOtherUser() {
         when(userRepository.findDefaultById(normalUser.getId())).thenReturn(normalUser);
 
-        assertThatThrownBy(() -> userServiceV1.getUsersWithId(UUID.randomUUID(), List.of(UserRole.Role.USER.toString()), normalUser.getId()))
+        assertThatThrownBy(() -> userServiceV1.getUser(UUID.randomUUID(), List.of(UserRole.Role.USER.toString()), normalUser.getId()))
                 .isInstanceOf(UserException.class);
     }
 

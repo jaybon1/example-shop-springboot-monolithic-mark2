@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class ReqPutProductsWithIdDtoV1 {
+public class ReqPutProductDtoV1 {
 
     @NotNull(message = "상품 정보를 입력해주세요.")
     @Valid

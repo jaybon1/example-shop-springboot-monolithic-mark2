@@ -13,12 +13,12 @@ import java.util.UUID;
 
 @Getter
 @Builder
-public class ResGetPaymentsWithIdDtoV1 {
+public class ResGetPaymentDtoV1 {
 
     private PaymentDto payment;
 
-    public static ResGetPaymentsWithIdDtoV1 of(Payment payment, Order order, User user) {
-        return ResGetPaymentsWithIdDtoV1.builder()
+    public static ResGetPaymentDtoV1 of(Payment payment, Order order, User user) {
+        return ResGetPaymentDtoV1.builder()
                 .payment(PaymentDto.from(payment, order, user))
                 .build();
     }

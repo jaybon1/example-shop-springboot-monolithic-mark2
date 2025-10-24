@@ -5,11 +5,11 @@ import com.example.shop.product.domain.repository.ProductRepository;
 import com.example.shop.product.presentation.advice.ProductError;
 import com.example.shop.product.presentation.advice.ProductException;
 import com.example.shop.product.presentation.dto.request.ReqPostProductsDtoV1;
-import com.example.shop.product.presentation.dto.request.ReqPutProductsWithIdDtoV1;
+import com.example.shop.product.presentation.dto.request.ReqPutProductDtoV1;
 import com.example.shop.product.presentation.dto.response.ResGetProductsDtoV1;
-import com.example.shop.product.presentation.dto.response.ResGetProductsWithIdDtoV1;
+import com.example.shop.product.presentation.dto.response.ResGetProductDtoV1;
 import com.example.shop.product.presentation.dto.response.ResPostProductsDtoV1;
-import com.example.shop.product.presentation.dto.response.ResPutProductsWithIdDtoV1;
+import com.example.shop.product.presentation.dto.response.ResPutProductDtoV1;
 import com.example.shop.user.domain.model.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,9 +40,9 @@ public class ProductServiceV1 {
                 .build();
     }
 
-    public ResGetProductsWithIdDtoV1 getProductsWithId(UUID productId) {
+    public ResGetProductDtoV1 getProduct(UUID productId) {
         Product product = findProductById(productId);
-        return ResGetProductsWithIdDtoV1.of(product);
+        return ResGetProductDtoV1.of(product);
     }
 
     @Transactional
@@ -62,11 +62,11 @@ public class ProductServiceV1 {
     }
 
     @Transactional
-    public ResPutProductsWithIdDtoV1 putProductsWithId(UUID authUserId, List<String> authUserRoleList, UUID productId, ReqPutProductsWithIdDtoV1 reqDto) {
+    public ResPutProductDtoV1 putProduct(UUID authUserId, List<String> authUserRoleList, UUID productId, ReqPutProductDtoV1 reqDto) {
         validateWriteAuthority(authUserRoleList);
         Product product = findProductById(productId);
 
-        ReqPutProductsWithIdDtoV1.ProductDto reqProduct = reqDto.getProduct();
+        ReqPutProductDtoV1.ProductDto reqProduct = reqDto.getProduct();
 
         String nameToUpdate = null;
         if (reqProduct.getName() != null) {
@@ -84,11 +84,11 @@ public class ProductServiceV1 {
         );
 
         Product savedProduct = productRepository.save(updatedProduct);
-        return ResPutProductsWithIdDtoV1.of(savedProduct);
+        return ResPutProductDtoV1.of(savedProduct);
     }
 
     @Transactional
-    public void deleteProductsWithId(UUID authUserId, List<String> authUserRoleList, UUID productId) {
+    public void deleteProduct(UUID authUserId, List<String> authUserRoleList, UUID productId) {
         validateWriteAuthority(authUserRoleList);
         Product product = findProductById(productId);
         if (authUserId == null) {

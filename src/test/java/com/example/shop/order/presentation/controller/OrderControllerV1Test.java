@@ -149,7 +149,7 @@ class OrderControllerV1Test {
     }
 
     @Test
-    void testGetOrdersWithIdSuccess() throws Exception {
+    void testGetOrderSuccess() throws Exception {
         String accessJwt = loginAndGetAccessToken("temp1");
         String orderId = createOrder(accessJwt);
 

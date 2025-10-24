@@ -5,7 +5,7 @@ import com.example.shop.common.presentation.dto.ApiDto;
 import com.example.shop.order.application.service.OrderServiceV1;
 import com.example.shop.order.presentation.dto.request.ReqPostOrdersDtoV1;
 import com.example.shop.order.presentation.dto.response.ResGetOrdersDtoV1;
-import com.example.shop.order.presentation.dto.response.ResGetOrdersWithIdDtoV1;
+import com.example.shop.order.presentation.dto.response.ResGetOrderDtoV1;
 import com.example.shop.order.presentation.dto.response.ResPostOrdersDtoV1;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -45,17 +45,17 @@ public class OrderControllerV1 {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiDto<ResGetOrdersWithIdDtoV1>> getOrdersWithId(
+    public ResponseEntity<ApiDto<ResGetOrderDtoV1>> getOrder(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PathVariable("id") UUID orderId
     ) {
-        ResGetOrdersWithIdDtoV1 responseBody = orderServiceV1.getOrdersWithId(
+        ResGetOrderDtoV1 responseBody = orderServiceV1.getOrder(
                 customUserDetails.getUser().getId(),
                 customUserDetails.getUser().getRoleList(),
                 orderId
         );
         return ResponseEntity.ok(
-                ApiDto.<ResGetOrdersWithIdDtoV1>builder()
+                ApiDto.<ResGetOrderDtoV1>builder()
                         .data(responseBody)
                         .build()
         );
@@ -76,11 +76,11 @@ public class OrderControllerV1 {
     }
 
     @PostMapping("/{id}/cancel")
-    public ResponseEntity<ApiDto<Object>> postOrdersCancel(
+    public ResponseEntity<ApiDto<Object>> cancelOrder(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PathVariable("id") UUID orderId
     ) {
-        orderServiceV1.cancelOrdersWithId(
+        orderServiceV1.cancelOrder(
                 customUserDetails.getUser().getId(),
                 customUserDetails.getUser().getRoleList(),
                 orderId
