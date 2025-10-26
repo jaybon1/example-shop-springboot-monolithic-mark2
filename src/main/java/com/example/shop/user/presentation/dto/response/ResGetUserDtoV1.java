@@ -30,7 +30,7 @@ public class ResGetUserDtoV1 {
         private List<UserRoleDto> userRoleList;
 //        private List<UserSocial> userSocialList;
 
-        public static UserDto from(com.example.shop.user.domain.model.User user) {
+        public static UserDto from(User user) {
 
             return UserDto.builder()
                     .id(user.getId().toString())

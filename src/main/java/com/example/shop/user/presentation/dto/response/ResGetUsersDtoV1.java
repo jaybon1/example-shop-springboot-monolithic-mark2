@@ -47,13 +47,13 @@ public class ResGetUsersDtoV1 {
             private String email;
             private List<String> roleList;
 
-            private static List<UserDto> from(List<com.example.shop.user.domain.model.User> userList) {
+            private static List<UserDto> from(List<User> userList) {
                 return userList.stream()
                         .map(UserDto::from)
                         .toList();
             }
 
-            public static UserDto from(com.example.shop.user.domain.model.User user) {
+            public static UserDto from(User user) {
                 return UserDto.builder()
                         .id(user.getId().toString())
                         .username(user.getUsername())
