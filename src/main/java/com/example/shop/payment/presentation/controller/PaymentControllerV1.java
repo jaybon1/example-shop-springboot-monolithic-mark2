@@ -28,7 +28,11 @@ public class PaymentControllerV1 {
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PathVariable("id") UUID paymentId
     ) {
-        ResGetPaymentDtoV1 responseBody = paymentServiceV1.getPayment(paymentId, customUserDetails.getUser().getId());
+        ResGetPaymentDtoV1 responseBody = paymentServiceV1.getPayment(
+                paymentId,
+                customUserDetails.getUser().getId(),
+                customUserDetails.getUser().getRoleList()
+        );
         return ResponseEntity.ok(
                 ApiDto.<ResGetPaymentDtoV1>builder()
                         .data(responseBody)

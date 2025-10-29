@@ -58,27 +58,12 @@ public class OrderServiceV1 {
 
     @Transactional
     public ResPostOrdersDtoV1 postOrders(UUID authUserId, ReqPostOrdersDtoV1 reqDto) {
-        if (reqDto == null) {
-            throw new OrderException(OrderError.ORDER_BAD_REQUEST);
-        }
 
-        ReqPostOrdersDtoV1.OrderDto reqOrder = reqDto.getOrder();
-        if (reqOrder == null) {
-            throw new OrderException(OrderError.ORDER_BAD_REQUEST);
-        }
-
-        List<ReqPostOrdersDtoV1.OrderDto.OrderItemDto> reqOrderItemList = reqOrder.getOrderItemList();
-        if (reqOrderItemList == null || reqOrderItemList.isEmpty()) {
-            throw new OrderException(OrderError.ORDER_ITEMS_EMPTY);
-        }
+        List<ReqPostOrdersDtoV1.OrderDto.OrderItemDto> reqOrderItemList = reqDto.getOrder().getOrderItemList();
 
         Set<UUID> productIdSet = reqOrderItemList.stream()
                 .map(ReqPostOrdersDtoV1.OrderDto.OrderItemDto::getProductId)
                 .collect(Collectors.toSet());
-
-        if (productIdSet.contains(null)) {
-            throw new OrderException(OrderError.ORDER_BAD_REQUEST);
-        }
 
         Map<UUID, Product> productMap = productRepository.findAllById(productIdSet)
                 .stream()
@@ -102,14 +87,7 @@ public class OrderServiceV1 {
             UUID productId = reqOrderItem.getProductId();
             Long quantityValue = reqOrderItem.getQuantity();
 
-            if (quantityValue == null || quantityValue <= 0) {
-                throw new OrderException(OrderError.ORDER_INVALID_QUANTITY);
-            }
-
             Product product = productMap.get(productId);
-            if (product == null) {
-                throw new OrderException(OrderError.ORDER_PRODUCT_NOT_FOUND);
-            }
 
             long quantity = quantityValue;
             long currentStock = Optional.ofNullable(product.getStock()).orElse(0L);
@@ -141,7 +119,7 @@ public class OrderServiceV1 {
     }
 
     @Transactional
-    public void cancelOrder(UUID authUserId, List<String> authUserRoleList, UUID orderId) {
+    public void postOrderCancel(UUID authUserId, List<String> authUserRoleList, UUID orderId) {
         Order order = getOrderForUser(orderId, authUserId, authUserRoleList);
 
         if (Status.CANCELLED.equals(order.getStatus())) {

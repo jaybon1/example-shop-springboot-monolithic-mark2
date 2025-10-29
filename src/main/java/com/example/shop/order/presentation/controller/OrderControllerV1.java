@@ -76,11 +76,11 @@ public class OrderControllerV1 {
     }
 
     @PostMapping("/{id}/cancel")
-    public ResponseEntity<ApiDto<Object>> cancelOrder(
+    public ResponseEntity<ApiDto<Object>> postOrderCancel(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @PathVariable("id") UUID orderId
     ) {
-        orderServiceV1.cancelOrder(
+        orderServiceV1.postOrderCancel(
                 customUserDetails.getUser().getId(),
                 customUserDetails.getUser().getRoleList(),
                 orderId

@@ -76,7 +76,6 @@ public class ProductControllerV1 {
             @RequestBody @Valid ReqPutProductDtoV1 reqDto
     ) {
         ResPutProductDtoV1 responseBody = productServiceV1.putProduct(
-                customUserDetails.getUser().getId(),
                 customUserDetails.getUser().getRoleList(),
                 productId,
                 reqDto

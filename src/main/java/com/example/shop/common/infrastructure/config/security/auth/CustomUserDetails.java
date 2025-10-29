@@ -19,33 +19,26 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CustomUserDetails implements UserDetails, OAuth2User {
 
-    private UserPrincipal user;
+    private UserDto user;
     private Map<String, Object> attributes;
 
-    //    public static CustomUserDetails of(MemberEntity memberEntity, Map<String, Object> attributes) {
-//        return CustomUserDetails.builder()
-//                .member(Member.from(memberEntity))
-//                .attributes(attributes)
-//                .build();
-//    }
-//
     public static CustomUserDetails of(User user) {
         return CustomUserDetails.builder()
-                .user(UserPrincipal.from(user))
+                .user(UserDto.from(user))
                 .attributes(Map.of())
                 .build();
     }
 
     public static CustomUserDetails of(DecodedJWT decodedAccessJwt) {
         return CustomUserDetails.builder()
-                .user(UserPrincipal.from(decodedAccessJwt))
+                .user(UserDto.from(decodedAccessJwt))
                 .attributes(Map.of())
                 .build();
     }
 
     @Getter
     @Builder
-    public static class UserPrincipal {
+    public static class UserDto {
         private UUID id;
         private String username;
         private String password;
@@ -53,8 +46,8 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
         private String email;
         private List<String> roleList;
 
-        public static UserPrincipal from(DecodedJWT decodedAccessJwt) {
-            return UserPrincipal.builder()
+        public static UserDto from(DecodedJWT decodedAccessJwt) {
+            return UserDto.builder()
                     .id(UUID.fromString(decodedAccessJwt.getClaim("id").asString()))
                     .username(decodedAccessJwt.getClaim("username").asString())
                     .password(null)
@@ -64,8 +57,8 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
                     .build();
         }
 
-        public static UserPrincipal from(User user) {
-            return UserPrincipal.builder()
+        public static UserDto from(User user) {
+            return UserDto.builder()
                     .id(user.getId())
                     .username(user.getUsername())
                     .password(user.getPassword())

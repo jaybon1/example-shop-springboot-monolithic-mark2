@@ -10,11 +10,13 @@ import com.example.shop.payment.presentation.dto.request.ReqPostPaymentsDtoV1;
 import com.example.shop.payment.presentation.dto.response.ResGetPaymentDtoV1;
 import com.example.shop.payment.presentation.dto.response.ResPostPaymentsDtoV1;
 import com.example.shop.user.domain.model.User;
+import com.example.shop.user.domain.model.UserRole;
 import com.example.shop.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,11 +28,11 @@ public class PaymentServiceV1 {
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
 
-    public ResGetPaymentDtoV1 getPayment(UUID paymentId, UUID authUserId) {
+    public ResGetPaymentDtoV1 getPayment(UUID paymentId, UUID authUserId, List<String> authUserRoleList) {
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new PaymentException(PaymentError.PAYMENT_NOT_FOUND));
 
-        if (!payment.isOwnedBy(authUserId)) {
+        if (!payment.isOwnedBy(authUserId) && !isAdminOrManager(authUserRoleList)) {
             throw new PaymentException(PaymentError.PAYMENT_FORBIDDEN);
         }
 
@@ -90,5 +92,14 @@ public class PaymentServiceV1 {
     private User findUser(UUID userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new PaymentException(PaymentError.PAYMENT_USER_NOT_FOUND));
+    }
+
+    private boolean isAdminOrManager(List<String> authUserRoleList) {
+        if (authUserRoleList == null) {
+            return false;
+        }
+
+        return authUserRoleList.contains(UserRole.Role.ADMIN.toString())
+                || authUserRoleList.contains(UserRole.Role.MANAGER.toString());
     }
 }

@@ -62,7 +62,7 @@ public class ProductServiceV1 {
     }
 
     @Transactional
-    public ResPutProductDtoV1 putProduct(UUID authUserId, List<String> authUserRoleList, UUID productId, ReqPutProductDtoV1 reqDto) {
+    public ResPutProductDtoV1 putProduct(List<String> authUserRoleList, UUID productId, ReqPutProductDtoV1 reqDto) {
         validateWriteAuthority(authUserRoleList);
         Product product = findProductById(productId);
 
