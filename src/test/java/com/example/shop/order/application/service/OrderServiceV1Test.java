@@ -153,7 +153,7 @@ class OrderServiceV1Test {
 
     @Test
     @DisplayName("주문 취소는 사용자 본인 또는 관리자/매니저만 가능하다")
-    void cancelOrderWithAuthority() {
+    void postOrderCancelWithAuthority() {
         Order paidOrder = existingOrder
                 .assignPayment(createPayment(existingOrder.getId(), user.getId()))
                 .markPaid();
@@ -163,7 +163,7 @@ class OrderServiceV1Test {
         when(productRepository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        orderServiceV1.cancelOrder(user.getId(), List.of(UserRole.Role.USER.toString()), existingOrder.getId());
+        orderServiceV1.postOrderCancel(user.getId(), List.of(UserRole.Role.USER.toString()), existingOrder.getId());
 
         ArgumentCaptor<Order> captor = ArgumentCaptor.forClass(Order.class);
         verify(orderRepository, atLeastOnce()).save(captor.capture());
@@ -173,10 +173,10 @@ class OrderServiceV1Test {
 
     @Test
     @DisplayName("주문 취소 시 권한이 없으면 예외를 던진다")
-    void cancelOrderForbidden() {
+    void postOrderCancelForbidden() {
         when(orderRepository.findById(existingOrder.getId())).thenReturn(Optional.of(existingOrder));
 
-        assertThatThrownBy(() -> orderServiceV1.cancelOrder(UUID.randomUUID(), List.of("USER"), existingOrder.getId()))
+        assertThatThrownBy(() -> orderServiceV1.postOrderCancel(UUID.randomUUID(), List.of("USER"), existingOrder.getId()))
                 .isInstanceOf(OrderException.class)
                 .extracting(Throwable::getMessage)
                 .asString()
@@ -185,11 +185,11 @@ class OrderServiceV1Test {
 
     @Test
     @DisplayName("환불 시 결제를 찾지 못하면 예외를 던진다")
-    void cancelOrderPaymentMissing() {
+    void postOrderCancelPaymentMissing() {
         Order paidOrderWithoutPayment = existingOrder.markPaid();
         when(orderRepository.findById(existingOrder.getId())).thenReturn(Optional.of(paidOrderWithoutPayment));
 
-        assertThatThrownBy(() -> orderServiceV1.cancelOrder(user.getId(), List.of(UserRole.Role.USER.toString()), existingOrder.getId()))
+        assertThatThrownBy(() -> orderServiceV1.postOrderCancel(user.getId(), List.of(UserRole.Role.USER.toString()), existingOrder.getId()))
                 .isInstanceOf(PaymentException.class)
                 .extracting(Throwable::getMessage)
                 .asString()
