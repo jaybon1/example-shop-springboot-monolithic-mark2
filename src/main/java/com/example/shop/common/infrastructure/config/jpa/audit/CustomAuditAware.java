@@ -33,7 +33,7 @@ public class CustomAuditAware implements AuditorAware<String> {
 
         // 4) 실제 사용자
         if (authentication.getPrincipal() instanceof CustomUserDetails customUserDetails) {
-            return Optional.of(customUserDetails.getUser().getId().toString());
+            return Optional.of(customUserDetails.getId().toString());
         }
 
         // 그 외

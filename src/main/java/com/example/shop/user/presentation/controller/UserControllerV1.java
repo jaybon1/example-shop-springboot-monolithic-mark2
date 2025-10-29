@@ -33,8 +33,8 @@ public class UserControllerV1 {
             @RequestParam(value = "email", required = false) String email
     ) {
         ResGetUsersDtoV1 responseBody = userServiceV1.getUsers(
-                customUserDetails.getUser().getId(),
-                customUserDetails.getUser().getRoleList(),
+                customUserDetails.getId(),
+                customUserDetails.getRoleList(),
                 pageable,
                 username,
                 nickname,
@@ -55,8 +55,8 @@ public class UserControllerV1 {
         return ResponseEntity.ok(
                 ApiDto.<ResGetUserDtoV1>builder()
                         .data(userServiceV1.getUser(
-                                customUserDetails.getUser().getId(),
-                                customUserDetails.getUser().getRoleList(),
+                                customUserDetails.getId(),
+                                customUserDetails.getRoleList(),
                                 userId
                         ))
                         .build()
@@ -85,8 +85,8 @@ public class UserControllerV1 {
             @PathVariable("id") UUID userId
     ) {
         userServiceV1.deleteUser(
-                customUserDetails.getUser().getId(),
-                customUserDetails.getUser().getRoleList(),
+                customUserDetails.getId(),
+                customUserDetails.getRoleList(),
                 userId
         );
         return ResponseEntity.ok(

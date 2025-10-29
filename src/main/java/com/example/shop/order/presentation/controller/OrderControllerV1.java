@@ -33,8 +33,8 @@ public class OrderControllerV1 {
             @PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         ResGetOrdersDtoV1 responseBody = orderServiceV1.getOrders(
-                customUserDetails.getUser().getId(),
-                customUserDetails.getUser().getRoleList(),
+                customUserDetails.getId(),
+                customUserDetails.getRoleList(),
                 pageable
         );
         return ResponseEntity.ok(
@@ -50,8 +50,8 @@ public class OrderControllerV1 {
             @PathVariable("id") UUID orderId
     ) {
         ResGetOrderDtoV1 responseBody = orderServiceV1.getOrder(
-                customUserDetails.getUser().getId(),
-                customUserDetails.getUser().getRoleList(),
+                customUserDetails.getId(),
+                customUserDetails.getRoleList(),
                 orderId
         );
         return ResponseEntity.ok(
@@ -66,7 +66,7 @@ public class OrderControllerV1 {
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody @Valid ReqPostOrdersDtoV1 reqDto
     ) {
-        ResPostOrdersDtoV1 responseBody = orderServiceV1.postOrders(customUserDetails.getUser().getId(), reqDto);
+        ResPostOrdersDtoV1 responseBody = orderServiceV1.postOrders(customUserDetails.getId(), reqDto);
         return ResponseEntity.ok(
                 ApiDto.<ResPostOrdersDtoV1>builder()
                         .message("주문이 생성되었습니다.")
@@ -81,8 +81,8 @@ public class OrderControllerV1 {
             @PathVariable("id") UUID orderId
     ) {
         orderServiceV1.postOrderCancel(
-                customUserDetails.getUser().getId(),
-                customUserDetails.getUser().getRoleList(),
+                customUserDetails.getId(),
+                customUserDetails.getRoleList(),
                 orderId
         );
         return ResponseEntity.ok(

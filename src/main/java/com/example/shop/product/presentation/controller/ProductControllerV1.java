@@ -76,7 +76,7 @@ public class ProductControllerV1 {
             @RequestBody @Valid ReqPutProductDtoV1 reqDto
     ) {
         ResPutProductDtoV1 responseBody = productServiceV1.putProduct(
-                customUserDetails.getUser().getRoleList(),
+                customUserDetails.getRoleList(),
                 productId,
                 reqDto
         );
@@ -94,8 +94,8 @@ public class ProductControllerV1 {
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
         productServiceV1.deleteProduct(
-                customUserDetails.getUser().getId(),
-                customUserDetails.getUser().getRoleList(),
+                customUserDetails.getId(),
+                customUserDetails.getRoleList(),
                 productId
         );
         return ResponseEntity.ok(

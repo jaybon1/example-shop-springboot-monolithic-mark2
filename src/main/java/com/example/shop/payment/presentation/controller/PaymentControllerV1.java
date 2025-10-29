@@ -30,8 +30,8 @@ public class PaymentControllerV1 {
     ) {
         ResGetPaymentDtoV1 responseBody = paymentServiceV1.getPayment(
                 paymentId,
-                customUserDetails.getUser().getId(),
-                customUserDetails.getUser().getRoleList()
+                customUserDetails.getId(),
+                customUserDetails.getRoleList()
         );
         return ResponseEntity.ok(
                 ApiDto.<ResGetPaymentDtoV1>builder()
@@ -45,7 +45,7 @@ public class PaymentControllerV1 {
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody @Valid ReqPostPaymentsDtoV1 reqDto
     ) {
-        ResPostPaymentsDtoV1 responseBody = paymentServiceV1.postPayments(customUserDetails.getUser().getId(), reqDto);
+        ResPostPaymentsDtoV1 responseBody = paymentServiceV1.postPayments(customUserDetails.getId(), reqDto);
         return ResponseEntity.ok(
                 ApiDto.<ResPostPaymentsDtoV1>builder()
                         .message("결제가 완료되었습니다.")
